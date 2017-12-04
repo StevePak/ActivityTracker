@@ -1,0 +1,16 @@
+extend ../layout
+block header
+    h1#head User Account
+    h2 Details
+
+block content
+    .row
+        .col-md _id: #{_id} 
+    .row
+        .col-md User Name: #{username}
+    .row
+        .col-md First Name: #{firstName}
+    .row
+        .col-md Last Name: #{lastName}
+    .row
+        .col-md Profession: #{profession}

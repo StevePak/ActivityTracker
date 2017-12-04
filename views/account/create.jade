@@ -1,0 +1,32 @@
+extend ../layout
+block header
+    h1#head Create User
+    h2 Please enter user information
+    - if (typeof(error) !== 'undefined'){
+        alert.alert-danger #{error}
+    -}
+    - if (typeof(message) !== 'undefined'){
+        alert.alert-success #{message}
+    -}
+
+block content
+    form(method="post")
+        .form-group
+            label(for="email")
+                b Email
+            input.form-control(type="email", placeholder="Enter Email", name="email", required)
+        .form-group
+            label(for="password")
+                b Password
+            input.form-control(type="password", placeholder="Enter Password", name="password", required)
+        .form-group
+            label(for="repeatPassword")
+                b Repeat Password
+            input.form-control(type="password", placeholder="Repeat Password", name="repeatPassword", required)
+        .form-group
+            label(for="name")
+                b Name
+            input.form-control(type="text", placeholder="Enter Name", name="name", required)
+
+        button.btn(type="button") Cancel
+        button.btn.btn-primary(type="submit") Sign Up

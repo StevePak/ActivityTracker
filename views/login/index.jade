@@ -1,0 +1,14 @@
+extend ../layout
+block header
+    h1#head User Authentication
+    h2 Please enter login information
+
+block content
+    form(method="post")
+        .form-group
+            label(for="username") Username:
+            input.form-control(type="text", name="username")
+        .form-group
+            label(for="password") Password:
+            input.form-control(type="password", name="password")
+        input.btn.btn-primary(type="submit", value="Log In")
