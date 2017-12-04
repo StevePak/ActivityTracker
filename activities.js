@@ -286,8 +286,8 @@ module.exports = {
 	   return (setActivityEndTime(id, time));
 	},
 	
-	setActivityStartTimeTime: (id, time) => {
-	   return (setActivityStartTimeTime(id, time));
+	setActivityStartTime: (id, time) => {
+	   return (setActivityStartTime(id, time));
 	},
 	
 	removeActivity: (id) => {
