@@ -1,17 +1,16 @@
+
+const connection = require("./database/mongoConnection");
+const users = require("./database/db_users");
+const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
 const http = require("http");
 const bodyParser = require("body-parser");
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+const Strategy = require('passport-local').Strategy;
 const session = require("express-session")
 const flash = require('connect-flash');
 const configRoutes = require('./routes/index.js');
-
-const User = require('./User');
-const validateUser = User.validUser;
-const validatePassword = User.validPassword;
-const getUser = User.getUser;
 
 // app.use(express.static(__dirname));
 // app.use(express.static('public'));
@@ -27,11 +26,17 @@ app.use(session({
     saveUninitialized: false,    
 }));
 app.use(flash());
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  The
+// typical implementation of this is as simple as supplying the user ID when
+// serializing, and querying the user record by ID from the database when
+// deserializing.
 passport.serializeUser(function(user, done) {
     var user = Object.assign({}, user);
     delete user.hashedPassword;
@@ -42,31 +47,19 @@ passport.deserializeUser(function(user, done) {
     done(null, user);
 });
 
-passport.use(new LocalStrategy(
-    async function(username, password, done) {
-        // Check username
-        const validUser = await validateUser(username);
-        let user;
-        if (!validUser) {
-            console.log("Invalid user");
-            return done(null, false, { message: 'Incorrect username.' });
-        } else {
-            user = await getUser(username);
-        }
-
-        // Check password
-        const validPassword = await validatePassword(username, password);
-        if (!validPassword) {
-            return done(null, false, { message: 'Incorrect password.' });
-        }
-        
-        // If username & password are good
-        if(validUser && validPassword) {
-            console.log("Valid user and pass");
-            done(null, user);
-        }
-    }
-));
+// Configure the local strategy for use by Passport.
+//
+// The local strategy require a `verify` function which receives the credentials
+// (`username` and `password`) submitted by the user.  The function must verify
+// that the password is correct and then invoke `cb` with a user object, which
+// will be set at `req.user` in route handlers after authentication.
+passport.use(new Strategy(
+  async function(username, password, cb) {
+    let user = await users.getUserByName(username);
+      if ((user === null) || !user) { return cb(null, false,{ message: 'Incorrect username.' }); }
+	  if (bcrypt.compareSync(password, user.hashedPassword) == false) { return cb(null, false,{ message: 'Incorrect password.' }); }
+      return cb(null, user);
+  }));
 
 configRoutes(app);
 
