@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -25,9 +25,9 @@
     "express-session": "^1.15.6",
     "http": "0.0.0",
     "jade": "^1.11.0",
+    "mongodb": "^2.2.33",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "mongodb": "^2.2.33",
     "uuid": "^3.1.0"
   }
 }

@@ -255,6 +255,24 @@ function removeActivity(id)
     });	
 };
 
+async function get_todays_activity(){
+	/*
+	This function will grab today's activities from the database to display it to the user
+	*/
+	var today = new Date();
+	var date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
+	const activityCollection = await activities();
+	const today_activities = await activityCollection.find({"start_time": /.*date.*/});
+	return today_activities;
+}
+async function async find_activities_by_date(start_time){
+	/*
+	This function will grab specified date's activities from the database to display it to the user
+	*/
+	const activityCollection = await activities();
+	const found_activities = await activityCollection.find({"start_time": /.*start_time.*/});
+	return found_activities;
+}
 module.exports = {
     description: "This handles Activity data for NJ Avengers FP",
 		
@@ -292,5 +310,13 @@ module.exports = {
 	
 	removeActivity: (id) => {
 	   return (removeActivity(id));
+    },
+	
+	get_todays_activity: () => {
+	   return (get_todays_activity());
+    },
+	
+	find_activities_by_date: (start_time) => {
+	   return (find_activities_by_date(start_time));
     }
 };
