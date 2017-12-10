@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 //const data_db = require("../database");
 //const activityData = data_db.db_activities;
-
+/*move this out later*/
 
 router.get("/today", (req, res) => {
     activityData.get_todays_activity().then((ac_list) => {
