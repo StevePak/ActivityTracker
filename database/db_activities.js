@@ -231,7 +231,7 @@ async function get_todays_activity() {
     });
     return today_activities;
 }
-async function async find_activities_by_date(start_time) {
+async function find_activities_by_date(start_time) {
     /*
     This function will grab specified date's activities from the database to display it to the user
     */

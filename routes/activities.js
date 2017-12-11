@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const connection = require("../database/mongoConnection");
+const activities = require("../database/db_activities");
 //const data_db = require("../database");
 //const activityData = data_db.db_activities;
 /*move this out later*/
@@ -27,7 +29,7 @@ router.post("/create", (req, res) => {
     //res.render(res.json(temp));
     //// var userID = "TEMP_USER_ID";
     var userID = "TEMP_USER_ID"
-    activityData.createTotalActivity(userID, vm.actName, vm.actDescription, vm.startTime, vm.actLocation, vm.actNotes);
+    activities.createTotalActivity(userID, vm.actName, vm.actDescription, vm.startTime, vm.endTime, vm.actLocation, vm.actNotes);
 });
 router.get("/start_time", (req, res) => {
     activityData.find_activities_by_date(req.params.start_time).then((ac_list) => {
