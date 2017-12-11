@@ -1,7 +1,6 @@
 // CS-546 FP
 // M. Scully
 // Initial version
-
 const mongoCollections = require("./mongoCollections");
 const activities = mongoCollections.activities;
 const uuidv1 = require('uuid/v1');
@@ -13,32 +12,30 @@ function getActivityById(id)
  If the user does not exist, the method will reject.
 */
 {
-    if (!id) 
-        return Promise.reject("You must provide an Id of the Activity");
-    
+    if (!id) return Promise.reject("You must provide an Id of the Activity");
     return activities().then((activitiesCollection) => {
-        return activitiesCollection.findOne({_id: id});
-    });     
+        return activitiesCollection.findOne({
+            _id: id
+        });
+    });
 };
 
-function getActivityByUserId(userId)
-{
-    if (!id) 
-        return Promise.reject("You must provide a User Id");
-    
+function getActivityByUserId(userId) {
+    if (!id) return Promise.reject("You must provide a User Id");
     return activities().then((activitiesCollection) => {
-        return activitiesCollection.findOne({user_id: userId});
-    });     
+        return activitiesCollection.findOne({
+            user_id: userId
+        });
+    });
 };
 
-function getActivityByName(actName)
-{
-    if (!actName) 
-        return Promise.reject("You must provide an Activity Name");
-    
+function getActivityByName(actName) {
+    if (!actName) return Promise.reject("You must provide an Activity Name");
     return activities().then((activitiesCollection) => {
-        return activitiesCollection.findOne({name: actName});
-    });     
+        return activitiesCollection.findOne({
+            name: actName
+        });
+    });
 };
 
 function createSimpleActivity(userId, actName, startTime)
@@ -61,42 +58,31 @@ function createSimpleActivity(userId, actName, startTime)
  If the activity cannot be created, the method will reject.
 */
 {
-	if (!userId) 
-        return Promise.reject("You must provide a User ID");
-        
-	if (!actName) 
-        return Promise.reject("You must provide a Activity Name");
-        
-    if (!startTime) 
-        return Promise.reject("You must provide a start time");
-                
+    if (!userId) return Promise.reject("You must provide a User ID");
+    if (!actName) return Promise.reject("You must provide a Activity Name");
+    if (!startTime) return Promise.reject("You must provide a start time");
     return activities().then((activitiesCollection) => {
         let newActivity = {
             _id: uuidv1(),
-			user_id: userId,
+            user_id: userId,
             name: actName,
             type: "Public",
-			description: "",
-			start_time: startTime,
-			end_time: "",
+            description: "",
+            start_time: startTime,
+            end_time: "",
             place: "",
-			attendee_list: [],
-			notes: ""
+            attendee_list: [],
+            notes: ""
         };
-		
-        return activitiesCollection
-            .insertOne(newActivity)
-            .then((newInsertInformation) => {
-                return newInsertInformation.insertedId;
-            })
-            .then((newId) => {
-                return getActivityById(newId);
-            });
+        return activitiesCollection.insertOne(newActivity).then((newInsertInformation) => {
+            return newInsertInformation.insertedId;
+        }).then((newId) => {
+            return getActivityById(newId);
         });
- 
+    });
 };
 
-function createTotalActivity(userId, actName, typeOfAct, actDescription, startTime, actLocation, actAttendees, actNotes)
+function createTotalActivity(userId, actName, actDescription, startTime, endTime, actLocation, actNotes)
 /* 
  This function will resolve to the newly created user object, with the 
  following properties.
@@ -116,67 +102,54 @@ function createTotalActivity(userId, actName, typeOfAct, actDescription, startTi
  If the activity cannot be created, the method will reject.
 */
 {
-	if (!userId) 
+    if (!userId) {
         return Promise.reject("You must provide a User Id");
-       
-	if (!actName) 
+    }
+    if (!actName) {
         return Promise.reject("You must provide a Activity Name");
-        
-    if (!typeOfAct) 
-        return Promise.reject("You must provide a type of activity");
-	
-	if (!actDescription) 
+    }
+    if (!actDescription) {
         return Promise.reject("You must provide a description");
-	
-	if (!startTime) 
+    }
+    if (!startTime) {
         return Promise.reject("You must provide a start time");
-	
-	if (!actLocation) 
-        return Promise.reject("You must provide an location");
-	
-	if (!actAttendees) 
-        return Promise.reject("You must provide attendees");
-	
-	if (!actNotes) 
-        return Promise.reject("You must provide notes");
-                
+    }
+    if (!endTime) {
+        return Promise.reject("You must provide an end time");
+    }
     return activities().then((activitiesCollection) => {
         let newActivity = {
             _id: uuidv1(),
-			user_id: userId,
+            user_id: userId,
             name: actName,
-            type: typeOfAct,
-			description: actDescription,
-			start_time: startTime,
-			end_time: "",
+            type: "Private",
+            description: actDescription,
+            start_time: startTime,
+            end_time: endTime,
             place: actLocation,
-			attendee_list: actAttendees,
-			notes: actNotes
+            attendee_list: [],
+            notes: actNotes
         };
-		
-        return activitiesCollection
-            .insertOne(newActivity)
-            .then((newInsertInformation) => {
-                return newInsertInformation.insertedId;
-            })
-            .then((newId) => {
-                return getActivityById(newId);
-            });
+        return activitiesCollection.insertOne(newActivity).then((newInsertInformation) => {
+            return newInsertInformation.insertedId;
+        }).then((newId) => {
+            return getActivityById(newId);
         });
- 
+    });
 };
+
 function getAllActivities()
 /*
  This function will resolve to an array of all activities in the database.
 */
 {
-	let userArray = {};
-	return activities().then((activitiesCollection) => {
+    let userArray = {};
+    return activities().then((activitiesCollection) => {
         let userArray = {};
-		return userArray = activitiesCollection.find().toArray(); 
-	});		
+        return userArray = activitiesCollection.find().toArray();
+    });
 };
-	
+
 function setActivityEndTime(id, time)
 /*
  This function will set an activity end time in the database.
@@ -186,17 +159,14 @@ function setActivityEndTime(id, time)
  updated user.
 */
 {
-    if (!id) 
-        return Promise.reject("You must provide an id of the activity");
-	
-	if (!time) 
-        return Promise.reject("You must provide end time");
-    
+    if (!id) return Promise.reject("You must provide an id of the activity");
+    if (!time) return Promise.reject("You must provide end time");
     return activities().then((activitiesCollection) => {
         let updatedActivity = {
-            $set: { end_time: time }
+            $set: {
+                end_time: time
+            }
         };
-
         return activitiesCollection.update({
             _id: id
         }, updatedActivity).then(() => {
@@ -214,17 +184,14 @@ function setActivityStartTime(id, time)
  updated user.
 */
 {
-    if (!id) 
-        return Promise.reject("You must provide an id of the activity");
-	
-	if (!time) 
-        return Promise.reject("You must provide a start time");
-    
+    if (!id) return Promise.reject("You must provide an id of the activity");
+    if (!time) return Promise.reject("You must provide a start time");
     return activities().then((activitiesCollection) => {
         let updatedActivity = {
-            $set: { start_time: time }
+            $set: {
+                start_time: time
+            }
         };
-
         return activitiesCollection.update({
             _id: id
         }, updatedActivity).then(() => {
@@ -241,82 +208,72 @@ function removeActivity(id)
  If the removal succeeds, resolves to true.
 */
 {
-    if (!id) 
-        return Promise.reject("You must provide an id for the activity");
-        
+    if (!id) return Promise.reject("You must provide an id for the activity");
     return activities().then((activitiesCollection) => {
-        return activitiesCollection
-            .removeOne({_id: id})
-            .then((deletionInfo) => {
-                if (deletionInfo.deletedCount === 0) {
-                    throw(`Could not delete activity with id of ${id}`)
-                }
-            });
-    });	
+        return activitiesCollection.removeOne({
+            _id: id
+        }).then((deletionInfo) => {
+            if (deletionInfo.deletedCount === 0) {
+                throw (`Could not delete activity with id of ${id}`)
+            }
+        });
+    });
 };
-
-async function get_todays_activity(){
-	/*
-	This function will grab today's activities from the database to display it to the user
-	*/
-	var today = new Date();
-	var date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
-	const activityCollection = await activities();
-	const today_activities = await activityCollection.find({"start_time": /.*date.*/});
-	return today_activities;
+async function get_todays_activity() {
+    /*
+    This function will grab today's activities from the database to display it to the user
+    */
+    var today = new Date();
+    var date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+    const activityCollection = await activities();
+    const today_activities = await activityCollection.find({
+        "start_time": /.*date.*/
+    });
+    return today_activities;
 }
-async function async find_activities_by_date(start_time){
-	/*
-	This function will grab specified date's activities from the database to display it to the user
-	*/
-	const activityCollection = await activities();
-	const found_activities = await activityCollection.find({"start_time": /.*start_time.*/});
-	return found_activities;
+async function find_activities_by_date(start_time) {
+    /*
+    This function will grab specified date's activities from the database to display it to the user
+    */
+    const activityCollection = await activities();
+    const found_activities = await activityCollection.find({
+        "start_time": /.*start_time.*/
+    });
+    return found_activities;
 }
 module.exports = {
     description: "This handles Activity data for NJ Avengers FP",
-		
     getActivityById: (id) => {
-	   return (getActivityById(id));
+        return (getActivityById(id));
     },
-	
-	getActivityUserById: (id) => {
-	   return (getActivityUserById(userId));
+    getActivityUserById: (id) => {
+        return (getActivityUserById(userId));
     },
-	
-	getActivityByName: (name) => {
-	   return (getActivityByName(name));
+    getActivityByName: (name) => {
+        return (getActivityByName(name));
     },
-	
-	createSimpleActivity: (userId, actName, startTime) => {
-		return (createSimpleActivity(userId, actName, startTime));
+    createSimpleActivity: (userId, actName, startTime) => {
+        return (createSimpleActivity(userId, actName, startTime));
     },
-	
-	createTotalActivity: (userId, actName, typeOfAct, actDescription, startTime, actLocation, actAttendees, actNotes) => {
-		return (createTotalActivity(userId, actName, typeOfAct, actDescription, startTime, actLocation, actAttendees, actNotes));
+    createTotalActivity: (userId, actName, typeOfAct, actDescription, startTime, actLocation, actAttendees, actNotes) => {
+        return (createTotalActivity(userId, actName, typeOfAct, actDescription, startTime, actLocation, actAttendees, actNotes));
     },
-
     getAllActivities: () => {
-		return (getAllActivities());
+        return (getAllActivities());
     },
-	
-	setActivityEndTime: (id, time) => {
-	   return (setActivityEndTime(id, time));
-	},
-	
-	setActivityStartTime: (id, time) => {
-	   return (setActivityStartTime(id, time));
-	},
-	
-	removeActivity: (id) => {
-	   return (removeActivity(id));
+    setActivityEndTime: (id, time) => {
+        return (setActivityEndTime(id, time));
     },
-	
-	get_todays_activity: () => {
-	   return (get_todays_activity());
+    setActivityStartTime: (id, time) => {
+        return (setActivityStartTime(id, time));
     },
-	
-	find_activities_by_date: (start_time) => {
-	   return (find_activities_by_date(start_time));
+    removeActivity: (id) => {
+        return (removeActivity(id));
+    },
+    get_todays_activity: () => {
+        return (get_todays_activity());
+    },
+    find_activities_by_date: (start_time) => {
+        return (find_activities_by_date(start_time));
     }
 };

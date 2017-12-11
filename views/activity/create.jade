@@ -6,28 +6,32 @@ block header
 block content
     form(method="post")
         .form-group
-            label(for="name")
+            label(for="actName")
                 b Activity
-            input.form-control(type="text", placeholder="Enter Activity Name", name="name", required)
+            input.form-control(type="text", placeholder="Enter Activity Name", name="actName", required)
         .form-group
-            label(for="description")
+            label(for="actDescription")
                 b Activity Description
-            input.form-control(type="text", placeholder="Enter Activity Description", name="description", required)
+            input.form-control(type="text", placeholder="Enter Activity Description", name="actDescription", required)
         .form-group
             label(for="startTime")
                 b Start Time
             input.form-control(type="datetime-local", placeholder="Enter Start Time", name="startTime", required)
 
-        .form-group
-            label(for="endTime")
-                b End Time
-            input.form-control(type="datetime-local", placeholder="Enter Start Time", name="endTime")
 
         .form-group
-            label(for="place")
+            label(for="endTime", required)
+                b End Time
+                p If This activity has not yet occurred, provide an estimated end time. This can be updated later.
+            input.form-control(type="datetime-local", placeholder="Enter End Time", name="endTime")
+
+        .form-group
+            label(for="actLocation")
                 b Location
-            input.form-control(type="text", placeholder="Enter Start Time", name="place")
+            input.form-control(type="text", placeholder="Enter Start Time", name="actLocation")
                 
+
+    
 
         .form-group
             label(for="notes")
