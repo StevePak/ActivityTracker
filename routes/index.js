@@ -2,6 +2,7 @@ const passport = require('passport');
 
 const accountRoutes = require("./account");
 const activityRoutes = require("./activities");
+const homeRoutes = require("./home");
 const bodyParser = require("body-parser");
 
 function authenticated(req, res, next) {
@@ -17,6 +18,7 @@ const constructorMethod = (app) => {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
+    app.use('/', homeRoutes);
     app.use('/activities', authenticated, activityRoutes);
     app.use('/account', accountRoutes);
 

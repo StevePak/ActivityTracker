@@ -1,6 +1,7 @@
 extend ../layout
-block header
-    h1#head Create User
+
+block content
+    h1#head Registration
     h2 Please enter user information
     - if (typeof(error) !== 'undefined'){
         alert.alert-danger #{error}
@@ -9,7 +10,6 @@ block header
         alert.alert-success #{message}
     -}
 
-block content
     form(method="post")
         .form-group
             label(for="email")
@@ -28,5 +28,6 @@ block content
                 b Name
             input.form-control(type="text", placeholder="Enter Name", name="name", required)
 
-        button.btn(type="button") Cancel
+        
         button.btn.btn-primary(type="submit") Sign Up
+        button.btn.pull-right(type="button") Cancel
