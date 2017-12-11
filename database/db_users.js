@@ -29,7 +29,7 @@ function getUserByName(userName) {
     });
 };
 
-function createUser(userName, hashedPW, userEmail)
+async function createUser(userName, hashedPW, userEmail)
 /* 
  This function will resolve to the newly created user object, with the 
  following properties.
@@ -46,24 +46,25 @@ function createUser(userName, hashedPW, userEmail)
  This user will be stored in the users collection.
  If the user cannot be created, the method will reject.
 */ {
-    if (!usersName)
+    if (!userName)
         return Promise.reject("You must provide a User Name");
 
     if (!hashedPW)
         return Promise.reject("You must provide a Password");
 
-    if (!usersEmail)
+    if (!userEmail)
         return Promise.reject("You must provide an Email Address");
 
-    if (getUserByName(userName))
+    var user = await getUserByName(userName);
+    if (user)
         return Promise.reject("User name already exists.");
 
     return users().then((usersCollection) => {
         let newUser = {
             _id: uuidv1(),
             hashedPassword: hashedPW,
-            name: usersName,
-            email: usersEmail
+            name: userName,
+            email: userEmail
         };
 
         return usersCollection
@@ -129,8 +130,8 @@ module.exports = {
         return (getUserByName(name));
     },
 
-    createUser: (usersName, hashedPW, usersEmail) => {
-        return (createUser(usersName, hashedPW, usersEmail));
+    createUser: (userName, hashedPW, userEmail) => {
+        return (createUser(userName, hashedPW, userEmail));
     },
 
     getAllUsers: () => {
