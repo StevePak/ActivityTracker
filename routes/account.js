@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const User = require("../database/db_users");
+const bcrypt = require('bcrypt');
 
 router.post('/create', (req, res, next) => {
   var vm = req.body;
@@ -13,7 +15,7 @@ router.post('/create', (req, res, next) => {
   }
 
   //Data is valid
-  User.createUser(vm.email, vm.password, vm.name).then((user) => {
+  User.createUser(vm.name, bcrypt.hashSync(vm.password, 10), vm.email).then((user) => {
     res.render('account/create',
       {
         title: 'Create User',
