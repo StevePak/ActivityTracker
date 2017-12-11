@@ -1,0 +1,39 @@
+extend ../layout
+block header
+    h1#head Create Activity
+    h2 Please enter activity information
+
+block content
+    form(method="post")
+        .form-group
+            label(for="name")
+                b Activity
+            input.form-control(type="text", placeholder="Enter Activity Name", name="name", required)
+        .form-group
+            label(for="description")
+                b Activity Description
+            input.form-control(type="text", placeholder="Enter Activity Description", name="description", required)
+        .form-group
+            label(for="startTime")
+                b Start Time
+            input.form-control(type="datetime-local", placeholder="Enter Start Time", name="startTime", required)
+
+        .form-group
+            label(for="endTime")
+                b End Time
+            input.form-control(type="datetime-local", placeholder="Enter Start Time", name="endTime")
+
+        .form-group
+            label(for="place")
+                b Location
+            input.form-control(type="text", placeholder="Enter Start Time", name="place")
+                
+
+        .form-group
+            label(for="notes")
+                b Notes
+            textarea.form-control(name="notes")
+                
+
+        button.btn(type="button") Cancel
+        button.btn.btn-primary(type="submit") Submit
