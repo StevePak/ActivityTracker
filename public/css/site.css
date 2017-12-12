@@ -1,3 +1,11 @@
 .main-content {
-    padding-bottom: 70px
+    padding-bottom: 70px;
+}
+
+.form-control {
+    width: 50%;
+}
+
+.btn {
+    margin: 15px;
 }
