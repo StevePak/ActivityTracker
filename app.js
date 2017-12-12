@@ -20,10 +20,10 @@ app.set('view engine', 'jade')
 
 app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ 
+app.use(session({
     secret: 'anything',
     resave: true,
-    saveUninitialized: false,    
+    saveUninitialized: false,
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -37,13 +37,13 @@ app.use(passport.session());
 // typical implementation of this is as simple as supplying the user ID when
 // serializing, and querying the user record by ID from the database when
 // deserializing.
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     var user = Object.assign({}, user);
     delete user.hashedPassword;
     done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function (user, done) {
     done(null, user);
 });
 
@@ -54,12 +54,19 @@ passport.deserializeUser(function(user, done) {
 // that the password is correct and then invoke `cb` with a user object, which
 // will be set at `req.user` in route handlers after authentication.
 passport.use(new Strategy(
-  async function(username, password, cb) {
-    let user = await users.getUserByName(username);
-      if ((user === null) || !user) { return cb(null, false,{ message: 'Incorrect username.' }); }
-	  if (bcrypt.compareSync(password, user.hashedPassword) == false) { return cb(null, false,{ message: 'Incorrect password.' }); }
-      return cb(null, user);
-  }));
+    async function (username, password, cb) {
+        let user = await users.getUserByName(username);
+        if ((user === null) || !user) { return cb(null, false, { message: 'Incorrect username.' }); }
+        if (bcrypt.compareSync(password, user.hashedPassword) == false) { return cb(null, false, { message: 'Incorrect password.' }); }
+        return cb(null, user);
+    }));
+
+
+//Allows views to see if a user is authenticated or not. Allows views to display different things based on auth status.
+app.use(function (req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    next();
+});
 
 configRoutes(app);
 

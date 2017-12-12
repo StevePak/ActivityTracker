@@ -17,6 +17,14 @@ html
           ul.nav.navbar-nav
             li
               a(href="/") Home
+            if login
+              li.dropdown
+                a.dropdown-toggle(data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false", href="#")
+                  | Activities 
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a(href="/activities/create") Create
     .container
       .main-content
         block content

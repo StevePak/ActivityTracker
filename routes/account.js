@@ -42,7 +42,7 @@ router.get('/create', (req, res, next) => {
 });
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/activities/create',
+  successRedirect: '/',
   failureRedirect: '/account/login',
   session: true,
   failureFlash: true
