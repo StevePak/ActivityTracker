@@ -17,12 +17,8 @@ router.post('/create', (req, res, next) => {
 
   //Data is valid
   User.createUser(vm.name, bcrypt.hashSync(vm.password, 10), vm.email).then((user) => {
-    res.render('account/login',
-      {
-        title: 'Create User',
-        message: 'User created successfully'
-      }
-    );
+    req.flash('info', 'Successfully registered! Log In now!')
+    res.redirect('/account/login');
   }, (err) => {
     // Something went wrong with the server!
     res.render('account/create',
@@ -50,8 +46,13 @@ router.post('/login', passport.authenticate('local', {
 
 router.get('/login', (req, res, next) => {
   res.render('account/login',
-    { title: 'User Login' }
+    { title: 'User Login', message: req.flash('info'), error: req.flash('error') }
   )
+});
+
+router.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
 });
 
 module.exports = router;

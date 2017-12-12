@@ -119,6 +119,26 @@ function removeUser(id)
     });
 };
 
+function removeAllUsers()
+/*
+ Thisfunction will remove the user from the database.
+ If no id is provided, the method will reject.
+ If the user cannot be removed (does not exist), the method will reject.
+ If the removal succeeds, resolves to true.
+ Use it as:
+       const removeUser = users.removeUser("9714a17c-f228-49e9-a772-9086f5ff8bfb");
+       try {
+         return users.getUserById("9714a17c-f228-49e9-a772-9086f5ff8bfb");
+       } catch (error) {
+         console.error(error);
+       }
+
+*/ {
+    return users().then((usersCollection) => {
+        return usersCollection.removeMany()
+    });
+};
+
 module.exports = {
     description: "This handles User data for NJ Avengers FP",
 
@@ -140,5 +160,8 @@ module.exports = {
 
     removeUser: (id) => {
         return (removeUser(id));
+    },
+    removeAllUsers: () => {
+        return (removeAllUsers());
     }
 };

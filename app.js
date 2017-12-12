@@ -65,6 +65,7 @@ passport.use(new Strategy(
 //Allows views to see if a user is authenticated or not. Allows views to display different things based on auth status.
 app.use(function (req, res, next) {
     res.locals.login = req.isAuthenticated();
+    res.locals.user = req.user;
     next();
 });
 

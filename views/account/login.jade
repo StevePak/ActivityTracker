@@ -1,9 +1,13 @@
 extend ../layout
-block header
-    h1#head User Authentication
-    h2 Please enter login information
 
 block content
+    h1#head User Authentication
+    h2 Please enter login information
+    if (error && error != "")
+        .alert.alert-danger(role="alert") #{error}
+    if (message && message != "")
+        .alert.alert-success(role="alert") #{message}
+    
     form(method="post")
         .form-group
             label(for="username") Username:

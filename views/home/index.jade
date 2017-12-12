@@ -2,7 +2,7 @@ extend ../layout
 
 block content
     .jumbotron
-        if login
+        if !login
             h1 Welcome to Activity Tracker!
             p Activity Tracker is exactly that, a way to create and track your activities. Sign up or log in to try today!
             a.btn.btn-primary.btn-lg(href="/account/create") Sign Up!

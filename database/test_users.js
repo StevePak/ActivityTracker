@@ -10,8 +10,10 @@ async function main() {
 	/*
 	1. Create a simple User
 	*/
-	let user0 = await users.getUserByName("User1");
-	if (!user0) {
+
+	await users.removeAllUsers()
+	let user = await users.getUserByName("User1");
+	if (!user) {
 		let usersName = "User1";
 		let passWord = "Password";
 		let hashedPW = bcrypt.hashSync(passWord, 10);

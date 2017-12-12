@@ -25,6 +25,18 @@ html
                 ul.dropdown-menu
                   li
                     a(href="/activities/create") Create
+          ul.nav.navbar-nav.navbar-right
+            li
+              if login
+                li.dropdown
+                  a.dropdown-toggle(data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false", href="#")
+                    | #{user.name} 
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      a(href="/account/logout") Log Out
+              else
+                a(href="/account/login") Log In
     .container
       .main-content
         block content
