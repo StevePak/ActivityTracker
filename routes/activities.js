@@ -11,8 +11,11 @@ router.get("/today", (req, res) => {
 });
 
 router.get("/create", (req, res) => {
-    var user = req.user;
     res.render("activity/create");
+});
+
+router.get("/calendar", (req, res) => {
+    res.render("activity/calendar");
 });
 
 router.post("/create", (req, res) => {

@@ -1,0 +1,14 @@
+extend ../layout
+
+block content
+    h1#head My Calendar
+
+    #calendar
+
+block stylesheets
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css")
+
+block scripts
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js')
+    script(src='/js/calendar.js')

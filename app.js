@@ -12,8 +12,7 @@ const session = require("express-session")
 const flash = require('connect-flash');
 const configRoutes = require('./routes/index.js');
 
-// app.use(express.static(__dirname));
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
