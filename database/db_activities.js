@@ -222,30 +222,41 @@ function removeActivity(id)
 async function get_todays_activity(userid) {
     /*
     This function will grab today's activities from the database to display it to the user
+    Returns an array with names of activities that you have today
     */
     var today = new Date();
     var date = today.getFullYear()+ '-' +(today.getMonth() + 1) + '-' +  today.getDate();
+    var answer_dates = [];
     const activityCollection = await activities();
     console.log("today: " + date);
     userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
     console.log("user_id: " + userid);
+    /*search for similar value*/
     var my_regex = '\.*'+date+'\.'
     const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
-                                                              user_id: userid} ).toArray();
-    return found_activities;
+                                                              user_id: userid}, {name:1, _id:0} ).toArray();
+    /*populate array with name values*/
+    for (var i =0; i< found_activities.length ;i++) 
+        answer_dates[i] = found_activities[i].name;
+    return answer_dates;
     }  
 async function find_activities_by_date(start_time, userid) {
     /*
     This function will grab specified date's activities from the database to display it to the user
+    Returns an array 
     */
+    var answer_dates = [];
     const activityCollection = await activities();
     console.log("date: " + start_time);
     userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
     console.log("user_id: " + userid);
     var my_regex = '\.*'+start_time+'\.'
     const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
-                                                              user_id: userid} ).toArray();
-    return found_activities;
+                                                              user_id: userid}, {name:1, _id:0} ).toArray();
+    /*populate array with name values*/
+    for (var i =0; i< found_activities.length ;i++) 
+        answer_dates[i] = found_activities[i].name;
+    return answer_dates;
     }  
 module.exports = {
     description: "This handles Activity data for NJ Avengers FP",
