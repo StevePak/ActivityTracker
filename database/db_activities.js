@@ -219,28 +219,34 @@ function removeActivity(id)
         });
     });
 };
-async function get_todays_activity() {
+async function get_todays_activity(userid) {
     /*
     This function will grab today's activities from the database to display it to the user
     */
     var today = new Date();
-    var date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+    var date = today.getFullYear()+ '-' +(today.getMonth() + 1) + '-' +  today.getDate();
     const activityCollection = await activities();
-    const today_activities = await activityCollection.find({
-        "start_time": /.*date.*/
-    });
-    return today_activities;
-}
-async function find_activities_by_date(start_time) {
+    console.log("today: " + date);
+    userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
+    console.log("user_id: " + userid);
+    var my_regex = '\.*'+date+'\.'
+    const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
+                                                              user_id: userid} ).toArray();
+    return found_activities;
+    }  
+async function find_activities_by_date(start_time, userid) {
     /*
     This function will grab specified date's activities from the database to display it to the user
     */
     const activityCollection = await activities();
-    const found_activities = await activityCollection.find({
-        "start_time": /.*start_time.*/
-    });
+    console.log("date: " + start_time);
+    userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
+    console.log("user_id: " + userid);
+    var my_regex = '\.*'+start_time+'\.'
+    const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
+                                                              user_id: userid} ).toArray();
     return found_activities;
-}
+    }  
 module.exports = {
     description: "This handles Activity data for NJ Avengers FP",
     getActivityById: (id) => {

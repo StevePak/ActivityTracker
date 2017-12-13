@@ -25,7 +25,7 @@ async function main() {
 		console.log(getActs);
 	/
 	4. After all the activities are logged, remove some
-	*/
+	/
 	let act1 = await activities.getActivityByName("Board Game Night");
 	let removeAct = await activities.removeActivity(act1._id);
 	/*
@@ -40,6 +40,19 @@ async function main() {
 	let updatedAct = await activities.setActivityEndTime(act3._id, "12/1/2017 11:00 PM");
 		console.log(updatedAct);
 	*/
+    /*
+    7. Vlad testing his functions
+    */
+    console.log("-------------------------------");
+    var user_id = "af3148a0-dee1-11e7-9a89-83eb91d56380";
+    var date = "2017-11-12";
+    let test = await activities.get_todays_activity(user_id);
+    console.log(test);
+    console.log("-------------------------------");
+    //var user_id = "af3148a0-dee1-11e7-9a89-83eb91d56380";
+    let test2 = await activities.find_activities_by_date(date, user_id);
+    console.log(test2);
+	//console.log(today_acts);
 } //end main()
 
 main();
