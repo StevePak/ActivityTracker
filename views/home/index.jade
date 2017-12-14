@@ -12,11 +12,11 @@ block content
             p View your activities or create an activity today!
             if(my_list.length)
                 div
-                  h3 Today's Activities
+                  h3 Activities for Today
                   for name in my_list
                     div.card
                       h4= name
             else
-                h4 No Activities today
+                h3 No Activities today
             a.btn.btn-primary.btn-lg(href="/activities/calendar") View Activities
             a.btn.btn-primary.btn-lg.pull-right(href="/activities/create") Create

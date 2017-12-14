@@ -222,8 +222,6 @@ async function get_todays_activity(userid) {
     var date = today.getFullYear()+ '-' +(today.getMonth() + 1) + '-' +  today.getDate();
     var answer_dates = [];
     const activityCollection = await activities();
-    console.log("today: " + date);
-    console.log("user_id: " + userid);
     /*search for similar value*/
     var my_regex = '\.*'+date+'\.'
     const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
@@ -267,8 +265,5 @@ module.exports = {
     },
     get_todays_activity: (userid) => {
         return (get_todays_activity(userid));
-    },
-    find_activities_by_date: (start_time, userid) => {
-        return (find_activities_by_date(start_time, userid));
     }
 };
