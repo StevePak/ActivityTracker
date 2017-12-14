@@ -1,0 +1,15 @@
+extend ../layout
+
+block content
+    script(src="../../database/db_activities.js")
+    if(my_list.length)
+        div
+          h1 Today's Activities
+          for name in my_list
+            div.card
+              h4= name
+    else
+        h4 No Activities today
+    h1 Search
+    input(type="text", placeholder="Please enter the date", id = "my_date")
+    button.btn(onclick="get_date()") Find Activities
