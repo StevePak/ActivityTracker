@@ -39,7 +39,17 @@ router.get("/details/:id", async (req, res) => {
     activity.place = activity.place && activity.place != "" ? activity.place : "Not Set";
     activity.notes = activity.notes && activity.notes != "" ? activity.notes : "No Notes"
     res.render("activity/details", { activity: activity });
-})
+});
+
+router.get("/update/:id", async (req, res) => {
+    const activity = await activities.getActivityById(req.params.id);
+    res.render("activity/update", { activity: activity });
+});
+
+router.post("/update/:id", async (req, res) => {
+    const activityId = await activities.updateActivity(req.params.id, req.body);
+    res.redirect("/activities/details/" + req.params.id);
+});
 
 router.post("/create", (req, res) => {
     var vm = req.body;
@@ -58,6 +68,7 @@ router.get("/search", async (req, res) => {
     res.render("activity/search", { userid: userID, my_list: ac_list, my_list2: ac_list });
     //console.log(ac_list); 
 });
+
 router.get("/search/date", async (req, res) => {
     var userID = req.user._id;
     var body = req.body;

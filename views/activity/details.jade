@@ -2,7 +2,7 @@ extend ../layout
 
 block content
     h1#head Activity Details
-    a.btn.btn-primary.pull-right(href="#") Update Details
+        a.btn.btn-primary.pull-right(href="/activities/update/" + activity._id) Update Details
     hr
     h2 #{activity.name}
 

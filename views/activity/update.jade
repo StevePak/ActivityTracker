@@ -1,0 +1,40 @@
+extend ../layout
+
+block content
+    h1#head Update Activity
+
+    hr
+
+    form(method="post")
+        .form-group
+            label(for="name")
+                b Activity
+            input.form-control(type="text", placeholder="Enter Activity Name", name="name", required, value=activity.name)
+        .form-group
+            label(for="description")
+                b Activity Description
+            input.form-control(type="text", placeholder="Enter Activity Description", name="description", required, value=activity.description)
+        .form-group
+            label(for="start_time")
+                b Start Time
+            input.form-control(type="datetime-local", placeholder="Enter Start Time", name="start_time", required, value=activity.start_time)
+
+
+        .form-group
+            label(for="end_time", required)
+                b End Time
+            p End time can be set at a later date, if unknown.
+            input.form-control(type="datetime-local", placeholder="Enter End Time", name="end_time", value=activity.end_time)
+
+        .form-group
+            label(for="place")
+                b Location
+            input.form-control(type="text", placeholder="Enter Location", name="place", value=activity.place)
+                
+        .form-group
+            label(for="notes")
+                b Notes
+            textarea.form-control(name="notes") #{activity.notes}
+                    
+        button.btn.btn-margin(type="button") Cancel
+        button.btn.btn-primary.btn-margin(type="submit") Update
