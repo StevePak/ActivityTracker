@@ -223,21 +223,34 @@ async function get_todays_activity(userid) {
     /*
     This function will grab today's activities from the database to display it to the user
     Returns an array with names of activities that you have today
+    
     */
+    //userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
+    
+    if (!userid) 
+        return Promise.reject("Couldn't find a user id");
+    
     var today = new Date();
+    var list = "";
     var date = today.getFullYear()+ '-' +(today.getMonth() + 1) + '-' +  today.getDate();
     var answer_dates = [];
     const activityCollection = await activities();
+    date = "2017-12-12" // will comment out later
     console.log("today: " + date);
-    userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
     console.log("user_id: " + userid);
     /*search for similar value*/
     var my_regex = '\.*'+date+'\.'
     const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
-                                                              user_id: userid}, {name:1, _id:0} ).toArray();
+                                                              user_id: userid} ).toArray();
     /*populate array with name values*/
-    for (var i =0; i< found_activities.length ;i++) 
+    for (var i =0; i< found_activities.length ;i++){
         answer_dates[i] = found_activities[i].name;
+        answer_dates[i] += " at " + (found_activities[i].start_time).split('T')[1];
+    }
+    /*
+    for (var j = 0; j < answer_dates.length; j++)
+        list += "<li>" + answer_dates[j] + "</li>";
+    */
     return answer_dates;
     }  
 async function find_activities_by_date(start_time, userid) {
@@ -245,19 +258,39 @@ async function find_activities_by_date(start_time, userid) {
     This function will grab specified date's activities from the database to display it to the user
     Returns an array 
     */
+    userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
+    //start_time = "2017-12-12";
+    if (!userid) 
+        return Promise.reject("Couldn't find a user id");
+    /*
+    if (!start_time)
+        return Promise.reject("Couldn't find date");*/
     var answer_dates = [];
+    var list = "";
     const activityCollection = await activities();
     console.log("date: " + start_time);
-    userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
-    console.log("user_id: " + userid);
+    //start_time = "2017-12-12";
+    //console.log("user_id: " + userid);
     var my_regex = '\.*'+start_time+'\.'
     const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
-                                                              user_id: userid}, {name:1, _id:0} ).toArray();
+                                                              user_id: userid}).toArray();
     /*populate array with name values*/
-    for (var i =0; i< found_activities.length ;i++) 
+    for (var i =0; i< found_activities.length ;i++){
         answer_dates[i] = found_activities[i].name;
+        answer_dates[i] += " at " + (found_activities[i].start_time).split('T')[1];
+    }
+    for (var j = 0; j < answer_dates.length; j++)
+        list += "<li>" + answer_dates[j] + "</li>";
+    //console.log(list);
     return answer_dates;
-    }  
+    } 
+    /*
+function get_date(){
+    var x = document.getElementById("my_date").value;
+    console.log(x);
+    return x;
+}
+*/
 module.exports = {
     description: "This handles Activity data for NJ Avengers FP",
     getActivityById: (id) => {
@@ -287,10 +320,10 @@ module.exports = {
     removeActivity: (id) => {
         return (removeActivity(id));
     },
-    get_todays_activity: () => {
-        return (get_todays_activity());
+    get_todays_activity: (userid) => {
+        return (get_todays_activity(userid));
     },
-    find_activities_by_date: (start_time) => {
-        return (find_activities_by_date(start_time));
+    find_activities_by_date: (start_time, userid) => {
+        return (find_activities_by_date(start_time, userid));
     }
 };
