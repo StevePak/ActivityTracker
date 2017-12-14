@@ -36,14 +36,5 @@ router.get("/search/date", async (req, res) => {
     res.render("activity/search", {userid: userID, my_list: ac_list, my_list2: ac_list});
     //console.log(ac_list);
 });
-/*
-router.get("/start_time", (req, res) => {
-    var userID = req.user._id;
-    .then((ac_list) => {
-        res.json(ac_list);
-    }, () => {
-        res.sendStatus(500);
-    });
-});
-*/
+
 module.exports = router;

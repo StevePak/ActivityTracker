@@ -258,7 +258,7 @@ async function find_activities_by_date(start_time, userid) {
     This function will grab specified date's activities from the database to display it to the user
     Returns an array 
     */
-    userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
+    //userid = "af3148a0-dee1-11e7-9a89-83eb91d56380"; // will comment out later
     //start_time = "2017-12-12";
     if (!userid) 
         return Promise.reject("Couldn't find a user id");
@@ -270,7 +270,7 @@ async function find_activities_by_date(start_time, userid) {
     const activityCollection = await activities();
     console.log("date: " + start_time);
     //start_time = "2017-12-12";
-    //console.log("user_id: " + userid);
+    console.log("user_id: " + userid);
     var my_regex = '\.*'+start_time+'\.'
     const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
                                                               user_id: userid}).toArray();
