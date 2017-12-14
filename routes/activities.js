@@ -48,12 +48,4 @@ router.post("/create", (req, res) => {
     req.flash('success', 'Successfully Created Activity ' + vm.actName + '!');
     res.redirect("/activities/calendar");
 });
-
-router.get("/search", async (req, res) => {
-    var userID = req.user._id;
-    var body = req.body;
-    var ac_list = await activities.get_todays_activity(userID);
-    res.render("activity/search", { userid: userID, my_list: ac_list}); 
-});
-
 module.exports = router;

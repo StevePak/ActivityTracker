@@ -49,10 +49,6 @@ async function main() {
 	let test = await activities.get_todays_activity(user_id);
 	console.log(test);
 	console.log("-------------------------------");
-	//var user_id = "af3148a0-dee1-11e7-9a89-83eb91d56380";
-	let test2 = await activities.find_activities_by_date(date, user_id);
-	console.log(test2);
-	//console.log(today_acts);
 } //end main()
 
 main();
