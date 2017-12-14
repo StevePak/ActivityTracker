@@ -25,7 +25,7 @@ async function main() {
 		console.log(getActs);
 	/
 	4. After all the activities are logged, remove some
-	*/
+	
 	let act1 = await activities.getActivityByName("Board Game Night");
 	let removeAct = await activities.removeActivity(act1._id);
 	/*

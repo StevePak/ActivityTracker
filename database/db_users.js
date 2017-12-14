@@ -25,7 +25,7 @@ function getUserByName(userName) {
         return Promise.reject("You must provide an User Name");
 
     return users().then((usersCollection) => {
-        return usersCollection.findOne({ name: userName });
+        return usersCollection.findOne({ name: new RegExp(userName, "i") });
     });
 };
 

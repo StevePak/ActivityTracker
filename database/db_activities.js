@@ -10,8 +10,7 @@ function getActivityById(id)
  When given an id, this function will resolve to a Activity from the database.
  If no id is provided, the method will reject.
  If the user does not exist, the method will reject.
-*/
-{
+*/ {
     if (!id) return Promise.reject("You must provide an Id of the Activity");
     return activities().then((activitiesCollection) => {
         return activitiesCollection.findOne({
@@ -21,11 +20,11 @@ function getActivityById(id)
 };
 
 function getActivityByUserId(userId) {
-    if (!id) return Promise.reject("You must provide a User Id");
+    if (!userId) return Promise.reject("You must provide a User Id");
     return activities().then((activitiesCollection) => {
-        return activitiesCollection.findOne({
+        return activitiesCollection.find({
             user_id: userId
-        });
+        }).toArray();
     });
 };
 
@@ -56,8 +55,7 @@ function createSimpleActivity(userId, actName, startTime)
  }  
  This activity will be stored in the activities collection.
  If the activity cannot be created, the method will reject.
-*/
-{
+*/ {
     if (!userId) return Promise.reject("You must provide a User ID");
     if (!actName) return Promise.reject("You must provide a Activity Name");
     if (!startTime) return Promise.reject("You must provide a start time");
@@ -100,8 +98,7 @@ function createTotalActivity(userId, actName, actDescription, startTime, endTime
  }  
  This activity will be stored in the activities collection.
  If the activity cannot be created, the method will reject.
-*/
-{
+*/ {
     if (!userId) {
         return Promise.reject("You must provide a User Id");
     }
@@ -113,9 +110,6 @@ function createTotalActivity(userId, actName, actDescription, startTime, endTime
     }
     if (!startTime) {
         return Promise.reject("You must provide a start time");
-    }
-    if (!endTime) {
-        return Promise.reject("You must provide an end time");
     }
     return activities().then((activitiesCollection) => {
         let newActivity = {
@@ -141,8 +135,7 @@ function createTotalActivity(userId, actName, actDescription, startTime, endTime
 function getAllActivities()
 /*
  This function will resolve to an array of all activities in the database.
-*/
-{
+*/ {
     let userArray = {};
     return activities().then((activitiesCollection) => {
         let userArray = {};
@@ -157,8 +150,7 @@ function setActivityEndTime(id, time)
  the method will reject. If the activity cannot be updated (does not exist, etc), this 
  method will reject. If the update is successful, this method will resolve to the 
  updated user.
-*/
-{
+*/ {
     if (!id) return Promise.reject("You must provide an id of the activity");
     if (!time) return Promise.reject("You must provide end time");
     return activities().then((activitiesCollection) => {
@@ -182,8 +174,7 @@ function setActivityStartTime(id, time)
  the method will reject. If the activity cannot be updated (does not exist, etc), this 
  method will reject. If the update is successful, this method will resolve to the 
  updated user.
-*/
-{
+*/ {
     if (!id) return Promise.reject("You must provide an id of the activity");
     if (!time) return Promise.reject("You must provide a start time");
     return activities().then((activitiesCollection) => {
@@ -206,8 +197,7 @@ function removeActivity(id)
  If no id is provided, the method will reject.
  If the user cannot be removed (does not exist), the method will reject.
  If the removal succeeds, resolves to true.
-*/
-{
+*/ {
     if (!id) return Promise.reject("You must provide an id for the activity");
     return activities().then((activitiesCollection) => {
         return activitiesCollection.removeOne({
@@ -246,8 +236,8 @@ module.exports = {
     getActivityById: (id) => {
         return (getActivityById(id));
     },
-    getActivityUserById: (id) => {
-        return (getActivityUserById(userId));
+    getActivityByUserId: (userId) => {
+        return (getActivityByUserId(userId));
     },
     getActivityByName: (name) => {
         return (getActivityByName(name));

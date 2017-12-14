@@ -57,7 +57,7 @@ passport.use(new Strategy(
         let user = await users.getUserByName(username);
         if ((user === null) || !user) { return cb(null, false, { message: 'Incorrect username.' }); }
         if (bcrypt.compareSync(password, user.hashedPassword) == false) { return cb(null, false, { message: 'Incorrect password.' }); }
-        return cb(null, user);
+        return cb(null, user, { message: "Welcome!" });
     }));
 
 
@@ -65,6 +65,13 @@ passport.use(new Strategy(
 app.use(function (req, res, next) {
     res.locals.login = req.isAuthenticated();
     res.locals.user = req.user;
+    next();
+});
+
+app.use(function (req, res, next) {
+    res.locals.info = req.flash('info');
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 

@@ -1,5 +1,12 @@
 $(document).ready(function () {
 
-    $('#calendar').fullCalendar();
+    $('#calendar').fullCalendar({
+        eventSources: [
+            {
+                url: '/activities/all',
+                type: 'GET'
+            }
+        ]
+    });
 
 });

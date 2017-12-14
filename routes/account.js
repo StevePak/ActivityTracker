@@ -7,51 +7,40 @@ const passport = require('passport');
 router.post('/create', (req, res, next) => {
   var vm = req.body;
   if (vm.password !== vm.repeatPassword) {
-    res.render('account/create',
-      {
-        title: 'Create User',
-        error: 'Passwords do not match'
-      }
-    )
+    res.render('account/create', { err: "Password does not match." })
   }
 
   //Data is valid
   User.createUser(vm.name, bcrypt.hashSync(vm.password, 10), vm.email).then((user) => {
-    req.flash('info', 'Successfully registered! Log In now!')
+    req.flash('success', 'Successfully registered! Log In now!')
     res.redirect('/account/login');
   }, (err) => {
     // Something went wrong with the server!
-    res.render('account/create',
-      {
-        title: 'Create User',
-        error: err
-      }
-    );
+    res.render('account/create', { error: err });
   });
 
 });
 
 router.get('/create', (req, res, next) => {
-  res.render('account/create',
-    { title: 'Create User' }
-  )
+  res.render('account/create');
 });
 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/account/login',
   session: true,
-  failureFlash: true
+  failureFlash: true,
+  successFlash: true
 }));
 
 router.get('/login', (req, res, next) => {
-  res.render('account/login',
-    { title: 'User Login', message: req.flash('info'), error: req.flash('error') }
-  )
+  res.render('account/login');
 });
 
 router.get('/logout', function (req, res) {
+  const name = req.user.name;
   req.logout();
+  req.flash('success', name + ' has been successfully logged out.');
   res.redirect('/');
 });
 

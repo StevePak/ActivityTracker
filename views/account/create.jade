@@ -2,11 +2,7 @@ extend ../layout
 
 block content
     h1#head Registration
-    h2 Please enter user information
-    if (error && error != "")
-        .alert.alert-danger(role="alert") #{error}
-    if (message && message != "")
-        .alert.alert-success(role="alert") #{message}
+    hr
 
     form(method="post")
         .form-group

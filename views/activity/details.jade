@@ -1,0 +1,24 @@
+extend ../layout
+
+block content
+    h1#head Activity Details
+    a.btn.btn-primary.pull-right(href="#") Update Details
+    hr
+    h2 #{activity.name}
+
+    b Description
+    p #{activity.description}
+
+    b Start Time
+    p #{activity.start_time}
+
+    b End Time
+    p #{activity.end_time}
+
+    b Location
+    p #{activity.place}
+    
+    b Notes
+    p #{activity.notes}
+        
+
