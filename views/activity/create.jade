@@ -5,7 +5,36 @@ block content
 
     hr
 
-    include ../partial/form.jade
+    form(method="post")
+        .form-group
+            label(for="actName")
+                b Activity
+            input.form-control(type="text", placeholder="Enter Activity Name", name="actName", required)
+        .form-group
+            label(for="actDescription")
+                b Activity Description
+            input.form-control(type="text", placeholder="Enter Activity Description", name="actDescription", required)
+        .form-group
+            label(for="startTime")
+                b Start Time
+            input.form-control(type="datetime-local", placeholder="Enter Start Time", name="startTime", required)
+
+
+        .form-group
+            label(for="endTime", required)
+                b End Time
+            p End time can be set at a later date, if unknown.
+            input.form-control(type="datetime-local", placeholder="Enter End Time", name="endTime")
+
+        .form-group
+            label(for="actLocation")
+                b Location
+            input.form-control(type="text", placeholder="Enter Location", name="actLocation")
                 
-    button.btn(type="button") Cancel
-    button.btn.btn-primary(type="submit") Submit
+        .form-group
+            label(for="notes")
+                b Notes
+            textarea.form-control(name="actNotes")
+                    
+        button.btn(type="button") Cancel
+        button.btn.btn-primary(type="submit") Submit
