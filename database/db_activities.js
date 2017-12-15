@@ -245,18 +245,11 @@ async function get_todays_activity(userid) {
     var answer_dates = [];
     const activityCollection = await activities();
     /*search for similar value*/
-    var my_regex = '\.*' + date + '\.'
-    const found_activities = await activityCollection.find({
-        start_time: { $regex: my_regex, $options: "i" },
-        user_id: userid
-    }).toArray();
-    /*populate array with name values*/
-    for (var i = 0; i < found_activities.length; i++) {
-        answer_dates[i] = found_activities[i].name;
-        answer_dates[i] += " at " + (found_activities[i].start_time).split('T')[1];
-    }
-    return answer_dates;
-}
+    var my_regex = '\.*'+date+'\.'
+    const found_activities = await activityCollection.find( { start_time: { $regex: my_regex, $options:"i" },
+                                                              user_id: userid} ).toArray();
+    return found_activities;
+    }  
 
 module.exports = {
     description: "This handles Activity data for NJ Avengers FP",

@@ -10,12 +10,13 @@ block content
         else
             h1 Welcome to Activity Tracker!
             p View your activities or create an activity today!
-            if(my_list.length)
+            if(my_list)
                 div
                   h3 Activities for Today
                   for name in my_list
                     div.card
-                      h4= name
+                      li 
+                        a(href="/activities/details/#{name._id}") #{name.name}
             else
                 h3 No Activities today
             a.btn.btn-primary.btn-lg.btn-margin(href="/activities/calendar") View Activities
