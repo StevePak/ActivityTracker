@@ -2,9 +2,52 @@ extend ../layout
 
 block content
     h1#head My Calendar
+        button.btn.btn-primary.pull-right(type="button", data-toggle="modal", data-target="#createModal") Create New Activity
     hr
 
     #calendar
+
+    form(method="post")
+        #createModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="createModalLabel")
+            .modal-dialog(role="document")
+                .modal-content
+                    .modal-header.bg-info
+                        button.close(type="button", data-dismiss="modal", aria-label="Close")
+                            span(aria-hidden="true") &times;
+                        h4#createModalLabel.modal-title Create Activity
+                    .modal-body 
+                        .form-group
+                            label(for="actName")
+                                b Activity
+                            input.form-control(type="text", placeholder="Enter Activity Name", name="actName", required)
+                        .form-group
+                            label(for="actDescription")
+                                b Activity Description
+                            input.form-control(type="text", placeholder="Enter Activity Description", name="actDescription", required)
+                        .form-group
+                            label(for="startTime")
+                                b Start Time
+                            input.form-control(type="datetime-local", placeholder="Enter Start Time", name="startTime", required)
+
+
+                        .form-group
+                            label(for="endTime", required)
+                                b End Time
+                            p End time can be set at a later date, if unknown.
+                            input.form-control(type="datetime-local", placeholder="Enter End Time", name="endTime")
+
+                        .form-group
+                            label(for="actLocation")
+                                b Location
+                            input.form-control(type="text", placeholder="Enter Location", name="actLocation")
+                                
+                        .form-group
+                            label(for="notes")
+                                b Notes
+                            textarea.form-control(name="actNotes")
+                    .modal-footer
+                        button.btn.btn-default(type="button", data-dismiss="modal") Close
+                        button.btn.btn-primary(type="submit") Create
 
 block stylesheets
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css")

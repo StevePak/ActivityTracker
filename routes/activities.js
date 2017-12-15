@@ -58,4 +58,12 @@ router.post("/create", (req, res) => {
     req.flash('success', 'Successfully Created Activity ' + vm.actName + '!');
     res.redirect("/activities/calendar");
 });
+
+router.post("/createAsync", (req, res) => {
+    var vm = req.body;
+    var userID = req.user._id;
+    activities.createTotalActivity(userID, vm.actName, vm.actDescription, vm.startTime, vm.endTime, vm.actLocation, vm.actNotes);
+    res.json({ result: "Success" });
+});
+
 module.exports = router;
