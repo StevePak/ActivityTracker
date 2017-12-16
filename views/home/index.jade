@@ -16,7 +16,13 @@ block content
                   for name in my_list
                     div.card
                       li 
-                        a(href="/activities/details/#{name._id}") #{name.name}
+                        a(href="/activities/details/#{name._id}") #{name.name} 
+                        b start: #{name.start_time}
+                        form(method="post")
+                            .form-group
+                                label(for="name")
+                                input.form-control(type="hidden", name="actid", required, value= name._id)
+                                button.btn.btn-primary.btn-margin(type="submit") Start Activity
             else
                 h3 No Activities today
             a.btn.btn-primary.btn-lg.btn-margin(href="/activities/calendar") View Activities
