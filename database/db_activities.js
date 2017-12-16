@@ -240,8 +240,13 @@ async function get_todays_activity(userid) {
         return Promise.reject("Couldn't find a user id");
 
     var today = new Date();
-    var list = "";
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    /*fixing formating issue*/
+    var date_days = today.getDate();
+    if (date_days < 10)  date_days = '0'+date_days;
+    var date_months = today.getMonth() + 1;
+    if (date_months < 10)  date_months = '0'+date_months;
+    
+    var date = today.getFullYear() + '-' + date_months + '-' + date_days;
     var answer_dates = [];
     const activityCollection = await activities();
     /*search for similar value*/
@@ -282,9 +287,6 @@ module.exports = {
     },
     get_todays_activity: (userid) => {
         return (get_todays_activity(userid));
-    },
-    find_activities_by_date: (start_time, userid) => {
-        return (find_activities_by_date(start_time, userid));
     },
     updateActivity: updateActivity
 };
