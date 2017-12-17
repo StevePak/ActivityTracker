@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const activities = require("../database/db_activities");
 const connection = require("../database/mongoConnection"); //for testing
+const moment = require('moment');
 
 router.get("/all", async (req, res) => {
     var activitiesList = await activities.getActivityByUserId(req.user._id);
@@ -34,8 +35,8 @@ router.get("/calendar", (req, res) => {
 
 router.get("/details/:id", async (req, res) => {
     const activity = await activities.getActivityById(req.params.id);
-    activity.start_time = new Date(Date.parse(activity.start_time)).toLocaleString();
-    activity.end_time = activity.end_time && activity.end_time != "" ? new Date(Date.parse(activity.end_time)).toLocaleString() : "Not Set";
+    activity.start_time = moment(activity.start_time).format("dddd, MMMM Do YYYY, h:mm a");
+    activity.end_time = activity.end_time && activity.end_time != "" ? moment(activity.end_time).format("dddd, MMMM Do YYYY, h:mm a") : "Not Set";
     activity.place = activity.place && activity.place != "" ? activity.place : "Not Set";
     activity.notes = activity.notes && activity.notes != "" ? activity.notes : "No Notes"
     res.render("activity/details", { activity: activity });

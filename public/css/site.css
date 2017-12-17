@@ -9,3 +9,112 @@
 .btn-margin {
     margin: 15px;
 }
+
+.navbar-default {
+    background-color: #9a7777;
+    border-color: #e7e7e7;
+}
+
+.navbar-default .navbar-brand {
+    color: #545454;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #545454;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #4e4e4e;
+    background-color: transparent;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #b73333;
+    border-color: #a42e2e;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #db0000;
+    border-color: #8e2828; /*set the color you want here*/
+}
+
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
+    color: #fff;
+    background-color: #742020;
+    border-color: #122b40;
+}
+
+.h1, h1 {
+    font-size: 40px;
+}
+
+.jumbotron .h1, .jumbotron h1 {
+    font-size: 70px;
+}
+
+.jumbotron p {
+    margin-bottom: 15px;
+    font-size: 30px;
+    font-weight: 200;
+}
+
+/* Full-width input fields */
+.inputStyle[type=text], .inputStyle[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+.buttonStyle {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtnPadding {
+    padding: 14px 20px;
+    background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtnStyle,.signupbtnStyle {
+    float: left;
+    width: 50%;
+}
+
+/* Add padding to container elements */
+.container-padding {
+    padding: 16px;
+}
+
+/* Clear floats */
+.clearfixContent::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+.cancelbtnWidth, .signupbtnWidth {
+    width: 100%;
+}
+
+.bg-info {
+    background-color: #f7d9d9;
+}
+
+a {
+    color: #b73333;
+    text-decoration: none;
+}

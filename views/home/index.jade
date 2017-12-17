@@ -10,19 +10,20 @@ block content
         else
             h1 Welcome to Activity Tracker!
             p View your activities or create an activity today!
+            hr
             if(my_list)
                 div
-                  h3 Activities for Today
-                  for name in my_list
-                    div.card
-                      li 
-                        a(href="/activities/details/#{name._id}") #{name.name} 
-                        b start: #{name.start_time}
-                        form(method="post")
-                            .form-group
-                                label(for="name")
-                                input.form-control(type="hidden", name="actid", required, value= name._id)
-                                button.btn.btn-primary.btn-margin(type="submit") Start Activity
+                    h3 Activities for Today
+                    ul.list-group
+                    for name in my_list
+                        li.list-group-item
+                            p
+                                a(href="/activities/details/#{name._id}") #{name.name} 
+                                form(method="post")
+                                    input.form-control(type="hidden", name="actid", required, value= name._id)
+                                    button.btn.btn-primary.pull-right(type="submit") Start Activity
+                            p
+                                b Start Time: #{name.start_time}
             else
                 h3 No Activities today
             a.btn.btn-primary.btn-lg.btn-margin(href="/activities/calendar") View Activities
