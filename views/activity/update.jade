@@ -2,6 +2,7 @@ extend ../layout
 
 block content
     h1#head Update Activity
+        button.btn.btn-primary.pull-right(type="button", data-toggle="modal", data-target="#deleteModal") Delete Activity
 
     hr
 
@@ -38,3 +39,17 @@ block content
                     
         button.btn.btn-margin(type="button") Cancel
         button.btn.btn-primary.btn-margin(type="submit") Update
+
+    form(method="post", action="/activities/delete/" + activity._id)
+        #deleteModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="deleteModalLabel")
+            .modal-dialog(role="document")
+                .modal-content
+                    .modal-header.bg-info
+                        button.close(type="button", data-dismiss="modal", aria-label="Close")
+                            span(aria-hidden="true") &times;
+                        h4#deleteModalLabel.modal-title Delete Activity
+                    .modal-body 
+                        | Are you sure you want to delete?
+                    .modal-footer
+                        button.btn.btn-default(type="button", data-dismiss="modal") Close
+                        button.btn.btn-primary(type="submit") Delete

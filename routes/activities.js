@@ -42,6 +42,11 @@ router.get("/details/:id", async (req, res) => {
     res.render("activity/details", { activity: activity });
 });
 
+router.post("/delete/:id", async (req, res) => {
+    await activities.removeActivity(req.params.id);
+    res.redirect("/");
+});
+
 router.get("/update/:id", async (req, res) => {
     const activity = await activities.getActivityById(req.params.id);
     res.render("activity/update", { activity: activity });

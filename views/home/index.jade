@@ -11,7 +11,7 @@ block content
             h1 Welcome to Activity Tracker!
             p View your activities or create an activity today!
             hr
-            if(my_list)
+            if(my_list && my_list.length > 0)
                 div
                     h3 Activities for Today
                     ul.list-group
@@ -26,5 +26,7 @@ block content
                                 b Start Time: #{name.start_time}
             else
                 h3 No Activities today
+            
+            hr
             a.btn.btn-primary.btn-lg.btn-margin(href="/activities/calendar") View Activities
             a.btn.btn-primary.btn-lg.btn-margin.pull-right(href="/activities/create") Create
